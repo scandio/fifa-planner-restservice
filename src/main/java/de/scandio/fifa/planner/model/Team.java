@@ -12,4 +12,8 @@ public interface Team {
     String getName();
 
     void setName(String name);
+
+    boolean getHasFifaBadge();
+
+    void setHasFifaBadge(boolean hasFifaBadge);
 }

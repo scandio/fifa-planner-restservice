@@ -45,6 +45,7 @@ public class LeagueController {
     @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.POST)
     public Team createTeam(@PathVariable("name") String name){
         TeamImpl team = new TeamImpl(name);
+        team.setHasFifaBadge(false);
         return this.teamRepo.save(team);
     }
 
