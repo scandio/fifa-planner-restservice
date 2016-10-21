@@ -29,67 +29,6 @@ public class LeagueController {
     @Autowired
     private MatchRepository matchRepo;
 
-    @RequestMapping(value = RestConstants.BASE_URI, method = RequestMethod.GET)
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
-
-    // Team Controller =================================================================
-
-    @RequestMapping(value = RestConstants.TEAMS_URI, method = RequestMethod.GET)
-    public List<? extends Team> getTeams(){
-        List<? extends Team> teams = this.teamRepo.findAll();
-        return teams;
-    }
-
-    @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.POST)
-    public Team createTeam(@PathVariable("name") String name){
-        TeamImpl team = new TeamImpl(name);
-        team.setHasFifaBadge(false);
-        return this.teamRepo.save(team);
-    }
-
-    @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.GET)
-    public Team getTeam(@PathVariable("id") String id){
-        return this.teamRepo.findOne(id);
-    }
-
-    @RequestMapping(value = RestConstants.TEAM_FIFA_BADGE_URI, method = RequestMethod.POST)
-    public Team setFifaBadgeForTeam(@PathVariable("id") String id){
-        List<TeamImpl> teams = this.teamRepo.findAll();
-        for(Team team:teams){
-            team.setHasFifaBadge(false);
-        }
-        this.teamRepo.save(teams);
-        TeamImpl team = this.teamRepo.findOne(id);
-        team.setHasFifaBadge(true);
-        return this.teamRepo.save(team);
-    }
-
-    // Match Controller ================================================================
-
-    @RequestMapping(value = RestConstants.MATCHES_URI, method = RequestMethod.GET)
-    public List<? extends Match> getMatches(){
-        List<? extends Match> matches = this.matchRepo.findAll();
-        return matches;
-    }
-
-    @RequestMapping(value = RestConstants.MATCHES_ON_MATCHDAY_URI, method = RequestMethod.GET)
-    public List<? extends Match> getMatchesOnMatchday(@PathVariable("matchday") Integer matchday){
-        List<? extends Match> matches = this.matchRepo.findAllByMatchday(matchday);
-        return matches;
-    }
-
-    @RequestMapping(value = RestConstants.MATCHES_URI, method = RequestMethod.POST)
-    public Match createMatch(@RequestBody MatchImpl match){
-        return this.matchRepo.save(match);
-    }
-
-    @RequestMapping(value = RestConstants.MATCH_URI, method = RequestMethod.GET)
-    public Match getMatch(@PathVariable("id") String id){
-        return this.matchRepo.findOne(id);
-    }
-
     // Matchday Controller ===========================================================
 
     @RequestMapping(value = RestConstants.MATCHES_GENERATE_URI, method = RequestMethod.GET)
