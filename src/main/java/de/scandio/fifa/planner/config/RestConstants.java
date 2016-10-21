@@ -7,6 +7,8 @@ public class RestConstants {
 
     public static final String BASE_URI = "/rest/v1";
 
+    public static final String ID = "id";
+
     // Team ===================================================================
 
     public static final String NAME = "name";
@@ -15,11 +17,11 @@ public class RestConstants {
 
     public static final String TEAM_URI = TEAMS_URI + "/{" + NAME + "}";
 
+    public static final String TEAM_FIFA_BADGE_URI = TEAMS_URI + "/badge/{" + ID + "}";
+
     // Match ===================================================================
 
     public static final String MATCHDAY = "matchday";
-
-    public static final String ID = "id";
 
     public static final String MATCHES_URI = BASE_URI + "/matches";
 
