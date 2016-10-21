@@ -54,6 +54,18 @@ public class LeagueController {
         return this.teamRepo.findOne(id);
     }
 
+    @RequestMapping(value = RestConstants.TEAM_FIFA_BADGE_URI, method = RequestMethod.POST)
+    public Team setFifaBadgeForTeam(@PathVariable("id") String id){
+        List<TeamImpl> teams = this.teamRepo.findAll();
+        for(Team team:teams){
+            team.setHasFifaBadge(false);
+        }
+        this.teamRepo.save(teams);
+        TeamImpl team = this.teamRepo.findOne(id);
+        team.setHasFifaBadge(true);
+        return this.teamRepo.save(team);
+    }
+
     // Match Controller ================================================================
 
     @RequestMapping(value = RestConstants.MATCHES_URI, method = RequestMethod.GET)
