@@ -17,6 +17,8 @@ public class TeamImpl implements Team {
 
     private String name;
 
+    private boolean hasFifaBadge;
+
     public TeamImpl() {
     }
 
@@ -41,5 +43,15 @@ public class TeamImpl implements Team {
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean getHasFifaBadge() {
+        return hasFifaBadge;
+    }
+
+    @Override
+    public void setHasFifaBadge(boolean hasFifaBadge) {
+        this.hasFifaBadge = hasFifaBadge;
     }
 }
