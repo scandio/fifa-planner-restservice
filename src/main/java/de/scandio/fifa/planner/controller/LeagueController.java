@@ -10,88 +10,40 @@ import de.scandio.fifa.planner.repository.TeamRepository;
 import de.scandio.fifa.planner.config.RestConstants;
 import de.scandio.fifa.planner.model.Team;
 import de.scandio.fifa.planner.persistence.TeamImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
 import java.util.*;
 
 /**
+ * The controller for managing a league
+ *
  * Created by stefanmuecke on 17.10.16.
  */
 @RestController
 @CrossOrigin(origins = "*")
+@Slf4j
 public class LeagueController {
 
+    /**
+     * a mongodb repository for {@link Team}s
+     */
     @Autowired
     private TeamRepository teamRepo;
 
+    /**
+     * a mongodb repository for {@link Match}es
+     */
     @Autowired
     private MatchRepository matchRepo;
 
-    @RequestMapping(value = RestConstants.BASE_URI, method = RequestMethod.GET)
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
-
-    // Team Controller =================================================================
-
-    @RequestMapping(value = RestConstants.TEAMS_URI, method = RequestMethod.GET)
-    public List<? extends Team> getTeams(){
-        List<? extends Team> teams = this.teamRepo.findAll();
-        return teams;
-    }
-
-    @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.POST)
-    public Team createTeam(@PathVariable("name") String name){
-        TeamImpl team = new TeamImpl(name);
-        team.setHasFifaBadge(false);
-        return this.teamRepo.save(team);
-    }
-
-    @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.GET)
-    public Team getTeam(@PathVariable("id") String id){
-        return this.teamRepo.findOne(id);
-    }
-
-    @RequestMapping(value = RestConstants.TEAM_FIFA_BADGE_URI, method = RequestMethod.POST)
-    public Team setFifaBadgeForTeam(@PathVariable("id") String id){
-        List<TeamImpl> teams = this.teamRepo.findAll();
-        for(Team team:teams){
-            team.setHasFifaBadge(false);
-        }
-        this.teamRepo.save(teams);
-        TeamImpl team = this.teamRepo.findOne(id);
-        team.setHasFifaBadge(true);
-        return this.teamRepo.save(team);
-    }
-
-    // Match Controller ================================================================
-
-    @RequestMapping(value = RestConstants.MATCHES_URI, method = RequestMethod.GET)
-    public List<? extends Match> getMatches(){
-        List<? extends Match> matches = this.matchRepo.findAll();
-        return matches;
-    }
-
-    @RequestMapping(value = RestConstants.MATCHES_ON_MATCHDAY_URI, method = RequestMethod.GET)
-    public List<? extends Match> getMatchesOnMatchday(@PathVariable("matchday") Integer matchday){
-        List<? extends Match> matches = this.matchRepo.findAllByMatchday(matchday);
-        return matches;
-    }
-
-    @RequestMapping(value = RestConstants.MATCHES_URI, method = RequestMethod.POST)
-    public Match createMatch(@RequestBody MatchImpl match){
-        return this.matchRepo.save(match);
-    }
-
-    @RequestMapping(value = RestConstants.MATCH_URI, method = RequestMethod.GET)
-    public Match getMatch(@PathVariable("id") String id){
-        return this.matchRepo.findOne(id);
-    }
-
     // Matchday Controller ===========================================================
 
+    /**
+     * Generate matchdays with all {@link Team}s in the database. If the amount of {@link Team}s is an odd number
+     * a new team called 'Spielfrei' is added
+     */
     @RequestMapping(value = RestConstants.MATCHES_GENERATE_URI, method = RequestMethod.GET)
     public void generateMatchdays(){
         List<? extends Team> teams = this.teamRepo.findAll();
@@ -99,11 +51,14 @@ public class LeagueController {
         Integer teamSize = teams.size();
 
         if(teamSize % 2 != 0){
+            log.info("Add a new team 'Spielfrei'");
             TeamImpl team = new TeamImpl("Spielfrei");
             this.teamRepo.save(team);
             teams = this.teamRepo.findAll();
             teamSize = teams.size();
         }
+
+        log.info("Generate matchdays for {} teams", teamSize);
 
         Collections.shuffle(teams);
 
@@ -181,6 +136,11 @@ public class LeagueController {
 
     // Table Controller ================================================================
 
+    /**
+     * Get the Table of the current league.
+     *
+     * @return a {@link Collection} with {@link TableItem}s
+     */
     @RequestMapping(value = RestConstants.TABLE_GENERATE_URI, method = RequestMethod.GET)
     public Collection<TableItem> getTable(){
         List<? extends Match> matches = this.matchRepo.findAll();
@@ -228,6 +188,8 @@ public class LeagueController {
         TableComparator comparator = new TableComparator();
         List<TableItem> tableItems = new ArrayList<>(table.values());
         Collections.sort(tableItems, comparator.reversed());
+
+        log.info("Get table for {} teams", tableItems.size());
         return tableItems;
     }
 }

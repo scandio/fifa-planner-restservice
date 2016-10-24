@@ -10,23 +10,37 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 /**
+ * A basic {@link Match} implementation
+ *
  * Created by stefanmuecke on 17.10.16.
  */
 @Document
 public class MatchImpl implements Match, Serializable {
 
+    /**
+     * A unique id of the {@link Match}
+     */
     @Id
     private String id;
-
-    @JsonProperty
+    /**
+     * the id of the home team
+     */
     private String home;
-    @JsonProperty
+    /**
+     * the id of the away team
+     */
     private String away;
-    @JsonProperty
+    /**
+     * the matchday
+     */
     private Integer matchday;
-    @JsonProperty
+    /**
+     * the amount of home goals
+     */
     private Integer homeGoals;
-    @JsonProperty
+    /**
+     * the amount of away goals
+     */
     private Integer awayGoals;
 
     @Override
