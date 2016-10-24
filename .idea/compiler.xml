@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="fifa-planner" />
+        <module name="fifa-planner-restservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="fifa-planner" target="1.8" />
+      <module name="fifa-planner-restservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
