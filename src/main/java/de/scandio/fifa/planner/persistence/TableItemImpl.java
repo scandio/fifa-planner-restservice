@@ -5,19 +5,45 @@ import de.scandio.fifa.planner.model.TableItem;
 import java.math.BigInteger;
 
 /**
+ * A basic {@link TableItem} implementation
+ *
  * Created by stefanmuecke on 17.10.16.
  */
 public class TableItemImpl implements TableItem {
 
+    /**
+     * the id of a team
+     */
     private String id;
+    /**
+     * the amount of played matches
+     */
     private Integer played;
+    /**
+     * the amount of won matches
+     */
     private Integer won;
+    /**
+     * the amount of drawn matches
+     */
     private Integer drawn;
+    /**
+     * the amount of lost matches
+     */
     private Integer lost;
+    /**
+     * the amount of goals
+     */
     private Integer goals;
+    /**
+     * the amount of against goals
+     */
     private Integer against;
+    /**
+     * the amount of points
+     */
     private Integer points;
-    private Integer diff;
+
 
     @Override
     public String getId() {
