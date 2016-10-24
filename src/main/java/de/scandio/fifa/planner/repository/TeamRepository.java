@@ -9,6 +9,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
+ * A mongo db repository for {@link TeamImpl}s
+ *
  * Created by stefanmuecke on 19.10.16.
  */
 @Repository

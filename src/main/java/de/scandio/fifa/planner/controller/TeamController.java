@@ -4,6 +4,7 @@ import de.scandio.fifa.planner.config.RestConstants;
 import de.scandio.fifa.planner.model.Team;
 import de.scandio.fifa.planner.persistence.TeamImpl;
 import de.scandio.fifa.planner.repository.TeamRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin(origins = "*")
+@Slf4j
 public class TeamController {
 
     /**
@@ -51,6 +53,7 @@ public class TeamController {
      */
     @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.POST)
     public Team createTeam(@PathVariable("name") String name){
+        log.info("Create new team with name '{}'", name);
         Team team = new TeamImpl(name);
         team.setHasFifaBadge(false);
         return this.teamRepo.save(conversionService.convert(team, TeamImpl.class));
@@ -64,6 +67,7 @@ public class TeamController {
      */
     @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.GET)
     public Team getTeam(@PathVariable("id") String id){
+        log.info("Get team with id '{}'", id);
         return this.teamRepo.findOne(id);
     }
 
@@ -75,6 +79,7 @@ public class TeamController {
      */
     @RequestMapping(value = RestConstants.TEAM_FIFA_BADGE_URI, method = RequestMethod.POST)
     public Team setFifaBadgeForTeam(@PathVariable("id") String id){
+        log.info("Set fifa badge for team with id '{}'", id);
         List<? extends Team> teams = this.teamRepo.findAll();
         for(Team team:teams){
             team.setHasFifaBadge(false);
