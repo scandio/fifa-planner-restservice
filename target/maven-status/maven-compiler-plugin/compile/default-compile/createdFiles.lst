@@ -1,6 +1,7 @@
 de/scandio/fifa/planner/controller/LeagueController.class
 de/scandio/fifa/planner/comparator/TableComparator.class
 de/scandio/fifa/planner/Application.class
+de/scandio/fifa/planner/config/AppConfiguration.class
 de/scandio/fifa/planner/config/RestConstants.class
 de/scandio/fifa/planner/persistence/TeamImpl.class
 de/scandio/fifa/planner/model/Match.class
