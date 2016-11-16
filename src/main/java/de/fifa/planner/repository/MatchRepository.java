@@ -22,4 +22,12 @@ public interface MatchRepository extends MongoRepository<MatchImpl, String> {
      * @return a {@link List} with {@link Match}es
      */
     List<? extends Match> findAllByMatchday(Integer matchday);
+
+    /**
+     * Find all matches between home and away
+     * @param home the id of the home team
+     * @param away the id of the away team
+     * @return a {@link List} with {@link Match}es
+     */
+    List<? extends Match> findByHomeAndAway(String home, String away);
 }
