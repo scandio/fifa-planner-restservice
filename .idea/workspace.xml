@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc1d84f5-26bf-441c-b6b0-bacfdf55ea84" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/de/fifa/planner/controller/StatisticController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/fifa/planner/config/RestConstants.java" afterPath="$PROJECT_DIR$/src/main/java/de/fifa/planner/config/RestConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/fifa/planner/repository/MatchRepository.java" afterPath="$PROJECT_DIR$/src/main/java/de/fifa/planner/repository/MatchRepository.java" />
     </list>
     <ignored path="fifa-planner.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1125,12 +1121,12 @@
       <workItem from="1479400640830" duration="1807000" />
       <workItem from="1479914319573" duration="2017000" />
       <workItem from="1480318087093" duration="496000" />
-      <workItem from="1484732877101" duration="10845000" />
+      <workItem from="1484732877101" duration="11703000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69811000" />
+    <option name="totallyTimeSpent" value="70669000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="22" width="1920" height="984" extended-state="6" />
