@@ -2,6 +2,7 @@ de/fifa/planner/controller/MatchController.class
 de/fifa/planner/persistence/TableItemImpl.class
 de/fifa/planner/persistence/TeamImpl.class
 de/fifa/planner/comparator/TableComparator.class
+de/fifa/planner/controller/StatisticController.class
 de/fifa/planner/Application.class
 de/fifa/planner/controller/TeamController.class
 de/fifa/planner/config/RestConstants.class
