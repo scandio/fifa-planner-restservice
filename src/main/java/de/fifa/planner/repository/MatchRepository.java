@@ -2,9 +2,12 @@ package de.fifa.planner.repository;
 
 import de.fifa.planner.persistence.MatchImpl;
 import de.fifa.planner.model.Match;
+import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
@@ -30,4 +33,11 @@ public interface MatchRepository extends MongoRepository<MatchImpl, String> {
      * @return a {@link List} with {@link Match}es
      */
     List<? extends Match> findByHomeAndAway(String home, String away);
+
+    /**
+     * Find all matches between home and away ordered by matchday desc
+     * @return a {@link List} with {@link Match}es
+     */
+    @Query(value = "{ 'homeGoals' : { '$ne' :  null }, '$or':[ {'home' : ?0}, {'away' : ?1} ] }")
+    Page<? extends Match> findAllByHomeOrAway(String home, String away, Pageable pageable);
 }

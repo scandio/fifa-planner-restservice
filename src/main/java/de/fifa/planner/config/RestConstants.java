@@ -29,6 +29,18 @@ public class RestConstants {
      */
     public static final String MATCHDAY = "matchday";
 
+    // Request Parameter ======================================================
+
+    /**
+     * A result size variable
+     */
+    public static final String RESULT_SIZE= "resultSize";
+
+    /**
+     * A default result size variable
+     */
+    public static final String DEFAULT_RESULT_SIZE= "5";
+
     // Team ===================================================================
 
     /**
@@ -74,4 +86,16 @@ public class RestConstants {
      * The uri to generate the table
      */
     public static final String TABLE_GENERATE_URI = BASE_URI + "/table";
+
+    // Stats ====================================================================
+
+    /**
+     * The uri to show statistics
+     */
+    public static final String STATS_BASE_URI = BASE_URI + "/stats";
+
+    /**
+     * The uri to show statistics
+     */
+    public static final String STATS_TEAM_HISTORY_URI = STATS_BASE_URI + "/history/{" + ID + "}";
 }
