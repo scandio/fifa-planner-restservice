@@ -12,6 +12,7 @@ import de.fifa.planner.model.Team;
 import de.fifa.planner.persistence.TeamImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -37,6 +38,12 @@ public class LeagueController {
      */
     @Autowired
     private MatchRepository matchRepo;
+
+    /**
+     * A converison service
+     */
+    @Autowired
+    private ConversionService conversionService;
 
     // Matchday Controller ===========================================================
 
@@ -90,6 +97,111 @@ public class LeagueController {
                                 match.setAway(teams.get(i).getId());
                                 match.setMatchday(day + teamSize -1);
                                 this.matchRepo.save(match);
+                            }
+                            if(j < teamSize - 2){
+                                j += 2;
+                            }else{
+                                j++;
+                            }
+                        }
+                    }else{
+                        j++;
+                    }
+                }
+            }else{
+                match = new MatchImpl();
+                match.setHome(teams.get(i).getId());
+                match.setAway(teams.get(teamSize / 2 - 1).getId());
+                match.setMatchday(teamSize - 2);
+                this.matchRepo.save(match);
+
+                match = new MatchImpl();
+                match.setHome(teams.get(teamSize / 2 - 1).getId());
+                match.setAway(teams.get(i).getId());
+                match.setMatchday(teamSize - 2 + teamSize - 1);
+                this.matchRepo.save(match);
+
+                int day = 1;
+                for(int j = teamSize / 2;j < teamSize - 1; j++){
+                    match = new MatchImpl();
+                    match.setHome(teams.get(i).getId());
+                    match.setAway(teams.get(j).getId());
+                    match.setMatchday(day);
+                    this.matchRepo.save(match);
+
+                    match = new MatchImpl();
+                    match.setHome(teams.get(j).getId());
+                    match.setAway(teams.get(i).getId());
+                    match.setMatchday(day + teamSize - 1);
+                    this.matchRepo.save(match);
+
+                    day += 2;
+                }
+            }
+        }
+    }
+
+    public void generateMatchdaysWithNewPlayer(){
+        List<? extends Team> teams = this.teamRepo.findAll();
+
+        Integer teamSize = teams.size();
+
+        if(teamSize % 2 != 0){
+            log.info("Add a new team 'Spielfrei'");
+            TeamImpl team = new TeamImpl("Spielfrei");
+            this.teamRepo.save(team);
+            teams = this.teamRepo.findAll();
+            teamSize = teams.size();
+        }
+
+        log.info("Generate matchdays for {} teams", teamSize);
+
+        Collections.shuffle(teams);
+
+        MatchImpl match;
+
+        for(int i = 0; i < teamSize; i++){
+            if(i < teamSize - 1){
+                int j = 0;
+                while(j < teamSize){
+                    if(i != j){
+                        if(j == 0 && i % 2 != 0){
+                            j++;
+                        }else{
+                            int day = i + j;
+                            if(i > 0 && j == teamSize -1){
+                                day = i * 2;
+                            }
+                            if(day > teamSize -1){
+                                day -= teamSize -1;
+                            }
+                            if(j != teamSize -1 || i < teamSize / 2 - 1){
+                                String home = teams.get(i).getId();
+                                String away = teams.get(j).getId();
+                                List<? extends Match> matches = this.matchRepo.findByHomeAndAway(home, away);
+                                List<? extends Match> matches2 = this.matchRepo.findByHomeAndAway(away, home);
+                                if(matches.size() > 0){
+                                    Match existingMatch = matches.get(0);
+                                    existingMatch.setMatchday(day);
+                                    this.matchRepo.save(this.conversionService.convert(existingMatch, MatchImpl.class));
+                                    if(matches2.size() > 0){
+                                        Match existingMatch2 = matches2.get(0);
+                                        existingMatch2.setMatchday(day);
+                                        this.matchRepo.save(this.conversionService.convert(existingMatch2, MatchImpl.class));
+                                    }
+                                } else {
+                                    match = new MatchImpl();
+                                    match.setHome(teams.get(i).getId());
+                                    match.setAway(teams.get(j).getId());
+                                    match.setMatchday(day);
+                                    this.matchRepo.save(match);
+                                    match = new MatchImpl();
+                                    match.setHome(teams.get(j).getId());
+                                    match.setAway(teams.get(i).getId());
+                                    match.setMatchday(day + teamSize -1);
+                                    this.matchRepo.save(match);
+                                }
+
                             }
                             if(j < teamSize - 2){
                                 j += 2;
