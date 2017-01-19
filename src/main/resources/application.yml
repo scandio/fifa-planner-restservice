@@ -1,2 +1,6 @@
 logging:
   level: info
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost/fifa

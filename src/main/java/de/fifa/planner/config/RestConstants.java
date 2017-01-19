@@ -95,7 +95,12 @@ public class RestConstants {
     public static final String STATS_BASE_URI = BASE_URI + "/stats";
 
     /**
-     * The uri to show statistics
+     * The uri to show last matches
      */
     public static final String STATS_TEAM_HISTORY_URI = STATS_BASE_URI + "/history/{" + ID + "}";
+
+    /**
+     * The uri to show next matches
+     */
+    public static final String STATS_TEAM_FUTURE_URI = STATS_BASE_URI + "/future/{" + ID + "}";
 }
