@@ -35,9 +35,16 @@ public interface MatchRepository extends MongoRepository<MatchImpl, String> {
     List<? extends Match> findByHomeAndAway(String home, String away);
 
     /**
-     * Find all matches between home and away ordered by matchday desc
+     * Find last matches for a team ordered by matchday desc
      * @return a {@link List} with {@link Match}es
      */
     @Query(value = "{ 'homeGoals' : { '$ne' :  null }, '$or':[ {'home' : ?0}, {'away' : ?1} ] }")
     Page<? extends Match> findAllByHomeOrAway(String home, String away, Pageable pageable);
+
+    /**
+     * Find next matches for a team ordered by matchday asc
+     * @return a {@link List} with {@link Match}es
+     */
+    @Query(value = "{ 'homeGoals' :  null , '$or':[ {'home' : ?0}, {'away' : ?1} ] }")
+    Page<? extends Match> findAllByHomeOrAwayFuture(String home, String away, Pageable pageable);
 }
