@@ -49,4 +49,18 @@ public class StatisticController {
         return matches.getContent();
     }
 
+    /**
+     * Retrieve a list with {@link MatchImpl}s of the last matches for a team.
+     *
+     * @return a {@link List} of {@link MatchImpl}s
+     */
+    @RequestMapping(value = RestConstants.STATS_TEAM_FUTURE_URI, method = RequestMethod.GET)
+    public List<? extends Match> getNextMatches(
+            @PathVariable("id") final String id,
+            @RequestParam(value = RestConstants.RESULT_SIZE, defaultValue = RestConstants.DEFAULT_RESULT_SIZE) final int resultSize){
+        PageRequest request = new PageRequest(0, resultSize, new Sort(Sort.Direction.ASC, "matchday"));
+        Page<? extends Match> matches = matchRepo.findAllByHomeOrAwayFuture(id, id, request);
+        return matches.getContent();
+    }
+
 }
