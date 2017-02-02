@@ -11,4 +11,17 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TeamRepository extends MongoRepository<TeamImpl, String> {
+
+    /**
+     * Find a {@link TeamImpl} by name
+     * @param name the team name
+     * @return a {@link TeamImpl}
+     */
+    public TeamImpl findOneByName(String name);
+
+    /**
+     * Delete {@link TeamImpl} by name
+     * @param name the team name
+     */
+    public void deleteByName(String name);
 }

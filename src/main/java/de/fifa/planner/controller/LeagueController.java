@@ -53,6 +53,7 @@ public class LeagueController {
      */
     @RequestMapping(value = RestConstants.MATCHES_GENERATE_URI, method = RequestMethod.GET)
     public void generateMatchdays(){
+        this.teamRepo.deleteByName("Spielfrei");
         List<? extends Team> teams = this.teamRepo.findAll();
 
         Integer teamSize = teams.size();

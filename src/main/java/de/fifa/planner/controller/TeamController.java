@@ -60,15 +60,15 @@ public class TeamController {
     }
 
     /**
-     * Get a {@link Team} specified by the id.
+     * Get a {@link Team} specified by the name.
      *
-     * @param id the id of the team
+     * @param name the name of the team
      * @return a {@link Team}
      */
     @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.GET)
-    public Team getTeam(@PathVariable("id") String id){
-        log.info("Get team with id '{}'", id);
-        return this.teamRepo.findOne(id);
+    public Team getTeam(@PathVariable("name") String name){
+        log.info("Get team with id '{}'", name);
+        return this.teamRepo.findOneByName(name);
     }
 
     /**
@@ -92,12 +92,12 @@ public class TeamController {
     }
 
     /**
-     * Delete a {@link Team} specified by id
-     * @param id the team id
+     * Delete a {@link Team} specified by name
+     * @param name the team name
      */
     @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.DELETE)
-    public void deleteTeam(@PathVariable("id") String id){
-        log.info("Delete team with id '{}'", id);
-        this.teamRepo.delete(id);
+    public void deleteTeam(@PathVariable("name") String name){
+        log.info("Delete team with id '{}'", name);
+        this.teamRepo.deleteByName(name);
     }
 }
