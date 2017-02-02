@@ -83,4 +83,9 @@ public class MatchController {
         return this.matchRepo.findOne(id);
     }
 
+    @RequestMapping(value = RestConstants.MATCHES_URI, method = RequestMethod.DELETE)
+    public void deleteMatches(){
+        log.info("Delete all matches");
+        this.matchRepo.deleteAll();
+    }
 }

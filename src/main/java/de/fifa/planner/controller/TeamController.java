@@ -90,4 +90,14 @@ public class TeamController {
         team.setHasFifaBadge(true);
         return this.teamRepo.save(conversionService.convert(team, TeamImpl.class));
     }
+
+    /**
+     * Delete a {@link Team} specified by id
+     * @param id the team id
+     */
+    @RequestMapping(value = RestConstants.TEAM_URI, method = RequestMethod.DELETE)
+    public void deleteTeam(@PathVariable("id") String id){
+        log.info("Delete team with id '{}'", id);
+        this.teamRepo.delete(id);
+    }
 }
